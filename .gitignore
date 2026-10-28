@@ -1,0 +1,7 @@
+project details /
+*.pdf
+*.html
+.DS_Store
+__pycache__/
+models/
+results/
