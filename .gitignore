@@ -5,3 +5,4 @@ project details /
 __pycache__/
 models/
 results/
+.venv/
