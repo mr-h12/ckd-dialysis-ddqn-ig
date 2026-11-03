@@ -17,7 +17,7 @@ State S (8 features, normalized to ~[0, 1], fixed order — shared contract):
     age       patient age (years)                       / 100
     albumin   serum albumin (g/dL)                      / 5
 
-Action A: index into ACTIONS = [0, 5, 8, 10, 13] mL/kg/h (13 = clinical ceiling).
+Action A: index into ACTIONS = [0, 5, 8, 10, 13] mL/kg/h (13 = clinical ceiling [6]).
 
 Transition S -> S' (dt = 0.25 h, W = body weight in kg):
     (1) dv = min(u * W * dt / 1000, overload)       fluid removed this step (kg)
@@ -28,12 +28,22 @@ Transition S -> S' (dt = 0.25 h, W = body weight in kg):
     (3) DBP' = DBP + 0.5 * (SBP' - SBP) + noise
     (4) HR'  = HR0 + c * (SBP0 - SBP') + noise      (heart compensates for BP drop)
 
+    Idea [6]: hypotension occurs when the UF rate exceeds the plasma refill rate;
+    risk rises with older age and low serum albumin. Coefficients are hand-tuned
+    (a deliberate simplification of multi-compartment dialysis models).
+
 Reward R:
     r = dv  - 10 * [SBP' < 90]  - 0.1 * |u - u_prev| / 13
     at the last step also: - 2 * overload'          (fluid left behind)
 
 Episode: 16 steps (4 h). Patient profiles (age, diastolic BP, urine albumin) are
 sampled from the UCI CKD dataset; see data/README.md for derived quantities.
+
+Reference
+[6] M. Kanbay, L. A. Ertuglu, B. Afsar, E. Ozdogan, D. Siriopol, A. Covic, C. Basile,
+    and A. Ortiz, "An update review of intradialytic hypotension: concept, risk factors,
+    clinical implications and management," Clin. Kidney J., vol. 13, no. 6,
+    pp. 981-993, 2020, doi: 10.1093/ckj/sfaa078.
 """
 import csv
 from pathlib import Path
@@ -48,7 +58,7 @@ N_STEPS = 16                       # 16 x 15 min = 4 h session
 DT = 0.25                          # hours per step
 STATE_DIM = 8
 N_ACTIONS = len(ACTIONS)
-HYPOTENSION_SBP = 90               # mmHg
+HYPOTENSION_SBP = 90               # mmHg, nadir definition of hypotension [6]
 
 # Simulator coefficients (hand-tuned so a constant 13 mL/kg/h often causes
 # hypotension while 5-8 mL/kg/h usually does not)
@@ -122,8 +132,8 @@ class DialysisEnv:
         self.removed += dv
 
         # (2) SBP: drops with net fluid loss (UF minus plasma refill), recovers toward baseline
-        refill = 4.0 + 2.0 * (p["albumin"] - 3.5)          # ~2-7 mL/kg/h
-        age_f = max(0.0, (p["age"] - 50) / 50)
+        refill = 4.0 + 2.0 * (p["albumin"] - 3.5)          # ~2-7 mL/kg/h; low albumin = risk factor [6]
+        age_f = max(0.0, (p["age"] - 50) / 50)              # older age = risk factor [6]
         sbp_new = (self.sbp - A_DROP * (1 + age_f) * (u - refill)
                    + B_RECOVER * (p["sbp0"] - self.sbp) + rng.normal(0, 2))
         sbp_new = min(sbp_new, p["sbp0"] + 10)               # refill can't push BP far above baseline
