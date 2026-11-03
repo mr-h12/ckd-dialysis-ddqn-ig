@@ -12,3 +12,7 @@ Group 2 class project (Selected Topics: RL & XAI). A Double DQN picks the ultraf
 | M4 Integrated Gradients, Literature & Deck | Mohanad Mostfa Ali | 231012398 |
 
 Full module breakdown, shared contracts (state / action / env API) and timeline: [TEAM_PLAN.md](TEAM_PLAN.md).
+
+## M4 explanations
+
+See [M4 setup and handoff](README_M4.md) for Integrated Gradients, demo plots, model validation requirements, and presentation content.
