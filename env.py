@@ -33,7 +33,7 @@ Transition S -> S' (dt = 0.25 h, W = body weight in kg):
     (a deliberate simplification of multi-compartment dialysis models).
 
 Reward R:
-    r = dv  - 10 * [SBP' < 90]  - 0.1 * |u - u_prev| / 13
+    r = dv  - 10 * [SBP' < 90]
     at the last step also: - 2 * overload'          (fluid left behind)
 
 Episode: 16 steps (4 h). Patient profiles (age, diastolic BP, urine albumin) are
@@ -119,7 +119,6 @@ class DialysisEnv:
         self.removed = 0.0
         self.sbp, self.dbp, self.hr = self.p["sbp0"], self.p["dbp0"], self.p["hr0"]
         self.t = 0
-        self.u_prev = 0
         return self._state()
 
     def step(self, a):
@@ -146,8 +145,7 @@ class DialysisEnv:
 
         # reward
         hypo = self.sbp < HYPOTENSION_SBP
-        r = dv - 10.0 * hypo - 0.1 * abs(u - self.u_prev) / 13
-        self.u_prev = u
+        r = dv - 10.0 * hypo
         done = self.t >= N_STEPS
         if done:
             r -= 2.0 * self.overload

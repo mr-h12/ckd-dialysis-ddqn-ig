@@ -49,7 +49,7 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
    - HR rises when BP drops
    - small random noise
 5. Formal MDP definition: write S, A, R and S' as equations, for the code docstring and a slide.
-   - **Reward:** `+ fluid removed toward dry weight − big penalty if SBP < 90 − penalty for |ΔUF| jumps − terminal penalty for remaining overload`
+   - **Reward:** `+ fluid removed toward dry weight − big penalty if SBP < 90 − terminal penalty for remaining overload`
 6. Sanity tests: a fixed-UF run makes BP drop when UF is high, and an episode ends at 16 steps.
 7. Slides owned: **Problem Statement**, **Dataset**, **MDP formulation**.
 
