@@ -10,7 +10,7 @@ Group 2 class project (Selected Topics: RL & XAI). A Double DQN picks the ultraf
 | M2 DDQN Agent | Gomana Hossam Eldine | 231013248 |
 | M3 Baselines, Evaluation & Validation | Zyad Gbriel | 231002617 |
 | M4 Integrated Gradients & Literature | Mohanad Mostfa Ali | 231012398 |
-| Presentation (external job, one person) | TBD | |
+| Presentation (external job, one person) | Yousef Mohamed Hasabo | 231011574 |
 
 Full module breakdown, shared contracts (state / action / env API) and timeline: [TEAM_PLAN.md](TEAM_PLAN.md).
 

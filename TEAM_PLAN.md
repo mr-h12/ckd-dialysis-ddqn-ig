@@ -88,7 +88,7 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
 
 ---
 
-## Presentation (external job, not part of any module). Owner: **one person, TBD**
+## Presentation (external job, not part of any module). Owner: **Yousef Mohamed Hasabo**
 One person builds the whole deck after the modules are done (Nov 6–8). Each module owner only hands over content (text, equations, figures, numbers); nobody else makes slides.
 - Sections (all required): Title + members and IDs, Project Idea, Problem Statement, Literature Review, Proposed Approach, Proposed Solution, Results & Discussion, Future Work, References (one consistent style, IEEE).
 - Inputs: M1 → problem, dataset, MDP (`env.py` docstring, `data/README.md`); M2 → DDQN algorithm + architecture; M3 → comparison table, convergence/stability plots; M4 → literature review, IG figures, references.
@@ -99,7 +99,7 @@ One person builds the whole deck after the modules are done (Nov 6–8). Each mo
 | Oct 28–30 | dataset + env v1 | DDQN on a dummy env | rule-based + tabular | literature review, IG on a dummy net |
 | Oct 31–Nov 2 | env final + MDP doc | train DDQN on the real env | DQN + eval script | IG pipeline ready |
 | Nov 3–5 | dataset README | 5-seed runs, save models | convergence/stability + table | IG on the trained models |
-| Nov 6–8 | buffer / help others | main.py end to end | plots | XAI figures |
+| Nov 6–8 | build the presentation | main.py end to end | plots | XAI figures |
 | Nov 9 | **all: full run from a clean env, rehearse, submit before 11 PM** | | | |
 
 Critical path: env (M1) → DDQN training (M2) → evaluation (M3) + IG (M4). Until the real env lands, M2, M3 and M4 work against a dummy env that follows the shared contract.
