@@ -1,4 +1,4 @@
-# Literature review (five references, IEEE style)
+# Literature review (six references, IEEE style)
 
 Verified against publisher pages and original-paper records on 28 October 2026. Foundational algorithm references retain their original years. Two application papers are from 2025.
 
@@ -11,6 +11,7 @@ Verified against publisher pages and original-paper records on 28 October 2026. 
 | Sundararajan et al. [3] | Introduces IG using sensitivity and implementation invariance | Chosen-action attribution and completeness checks | Attribution depends on the reference and model |
 | Li et al. [4] | Explainable ML for warning of blood-pressure anomalies in maintenance hemodialysis | Motivation for interpretable patient-signal analysis | Prediction and SHAP differ from control and IG |
 | Wang et al. [5] | Develops ML models for intradialytic hypotension prediction | Context for BP-risk modeling and evaluation | Predictive performance does not validate a treatment policy |
+| Kanbay et al. [6] | Reviews intradialytic hypotension, plasma refill, and associated risk factors | Motivates the simulator pressure response and choice of rate and pressure thresholds | The simulator uses simplified dynamics and project-specific thresholds |
 
 Our contribution is a classroom combination of a simplified dialysis environment, DDQN comparisons, and an IG audit across simulated sessions. None of these papers validates our hand-tuned simulator or the synthetic albumin mapping.
 
@@ -25,5 +26,7 @@ Our contribution is a classroom combination of a simplified dialysis environment
 [4] Z. Li, S. Hao, S. Shi, L. Li, and Z. Tao, “An explainable machine learning model for early warning of hypertensive and hypotensive anomalies in maintenance hemodialysis patients,” *BMC Nephrology*, vol. 26, art. 318, 2025, doi: 10.1186/s12882-025-04270-5. https://link.springer.com/article/10.1186/s12882-025-04270-5 (Publisher notes a September 2025 correction.)
 
 [5] P. Wang et al., “Construction and application of machine learning models for predicting intradialytic hypotension,” *PLOS One*, vol. 20, no. 10, e0333357, 2025, doi: 10.1371/journal.pone.0333357. https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0333357
+
+[6] M. Kanbay, L. A. Ertuglu, B. Afsar, E. Ozdogan, D. Siriopol, A. Covic, C. Basile, and A. Ortiz, “An update review of intradialytic hypotension: concept, risk factors, clinical implications and management,” *Clin. Kidney J.*, vol. 13, no. 6, pp. 981–993, 2020, doi: 10.1093/ckj/sfaa078. https://doi.org/10.1093/ckj/sfaa078
 
 Implementation reference: Captum IntegratedGradients API, https://captum.ai/api/integrated_gradients.html. The API returns an approximation delta based on completeness. A small delta verifies numerical integration, not clinical reliability.

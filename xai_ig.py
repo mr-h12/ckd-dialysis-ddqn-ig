@@ -12,9 +12,9 @@ import numpy as np
 import torch
 from captum.attr import IntegratedGradients
 
+from env import ACTIONS, SCALE
+
 FEATURES = ['overload', 'removed', 'sbp', 'dbp', 'hr', 'time', 'age', 'albumin']
-SCALE = np.array([4, 4, 200, 120, 150, 1, 100, 5], dtype=np.float32)
-ACTIONS = [0, 5, 8, 10, 13]
 
 
 def baseline_for(state):

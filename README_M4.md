@@ -4,7 +4,7 @@ Owner per repository: Mohanad Mostfa Ali. Based on main commit 9058b42a07227ff8c
 
 ## Install and run
 
-Copy `xai_ig.py` into the repository root next to `env.py`. Install `requirements-m4.txt` in your Python environment.
+Run these commands from the repository root.
 
 ```sh
 python -m pip install -r requirements-m4.txt
