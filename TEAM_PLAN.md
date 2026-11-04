@@ -41,17 +41,16 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
 ## Module 1: Data & Dialysis Simulator (MDP environment). Owner: **Yousef Mohamed Hasabo**
 1. Dataset: UCI CKD (400 patients, 24 features), used only to generate realistic patients (age, BP, albumin). The simulator does the rest.
    - Mention the larger Lin et al. 2019 hemodialysis dataset (Scientific Data) as future work only.
-2. Write the dataset justification: why this dataset, its source and reliability with citations, and its size, features and target. This goes into the README and the slides.
+2. Write the dataset justification: why this dataset, its source and reliability with citations, and its size, features and target. This goes into the README (and is handed to the presentation job).
 3. Preprocessing: handle missing values, normalize, and build a patient-profile sampler (age, BP, albumin, starting weight gain).
 4. Simple simulator (3–4 equations, cite one paper for the idea):
    - fluid overload goes down by the UF rate
    - BP drops when the UF rate is high
    - HR rises when BP drops
    - small random noise
-5. Formal MDP definition: write S, A, R and S' as equations, for the code docstring and a slide.
+5. Formal MDP definition: write S, A, R and S' as equations, for the code docstring (and handed to the presentation job).
    - **Reward:** `+ fluid removed toward dry weight − big penalty if SBP < 90 − terminal penalty for remaining overload`
 6. Sanity tests: a fixed-UF run makes BP drop when UF is high, and an episode ends at 16 steps.
-7. Slides owned: **Problem Statement**, **Dataset**, **MDP formulation**.
 
 ## Module 2: DDQN Agent (proposed model). Owner: **Gomana Hossam Eldine**
 1. Q-network (PyTorch MLP 8→64→64→5), replay buffer, ε-greedy schedule.
@@ -60,7 +59,6 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
 4. Hyperparameter config at the top of the file (γ, lr, batch, buffer size, target update), plus a short tuning sweep.
 5. Train over 5 seeds, then save models and logs for Modules 3 and 4.
 6. Write `main.py` to run the full pipeline end to end, and `requirements.txt`.
-7. Slides owned: **Project Idea**, **Proposed Approach** (DDQN algorithm + architecture), **Proposed Solution**.
 
 ## Module 3: Baselines, Evaluation & Validation. Owner: **Zyad Gbriel**
 1. **Standard DQN** baseline: reuse the Module 2 network, but the target net both selects and evaluates (1 flag).
@@ -76,9 +74,8 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
    - UF smoothness
 
    Output: the comparison table and the plots.
-7. Slides owned: **Results & Discussion** (table, curves, interpretation).
 
-## Module 4: Explainability (Integrated Gradients), Literature & Presentation. Owner: **Mohanad Mostfa Ali**
+## Module 4: Explainability (Integrated Gradients) & Literature. Owner: **Mohanad Mostfa Ali**
 1. Integrated Gradients on the trained DDQN Q-network, targeting the Q-value of the chosen action. Use Captum, with a baseline equal to the "healthy / zero-overload" state. Justify it in one sentence: "We use a healthy patient with no extra fluid as the baseline."
 2. Per-step explanation: an attribution bar chart for single decisions, e.g. "why UF was cut to 5 mL/kg/h".
 3. Within-session view: an attribution heatmap of feature × time step across one session.
@@ -88,9 +85,13 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
    - anchor: RL (dueling double DQN) for dialysis dry weight, IEEE JBHI 2022
    - 2–3 recent (2025–2026) papers on ML for dialysis or IG in healthcare
    - van Hasselt et al. 2016 (Double DQN) and Sundararajan et al. 2017 (Integrated Gradients)
-7. Presentation assembly: Title + members and IDs, Literature Review, XAI results, **Future Work**, **References**. Also merge everyone's slides into one deck.
 
 ---
+
+## Presentation (external job, not part of any module). Owner: **one person, TBD**
+One person builds the whole deck after the modules are done (Nov 6–8). Each module owner only hands over content (text, equations, figures, numbers); nobody else makes slides.
+- Sections (all required): Title + members and IDs, Project Idea, Problem Statement, Literature Review, Proposed Approach, Proposed Solution, Results & Discussion, Future Work, References (one consistent style, IEEE).
+- Inputs: M1 → problem, dataset, MDP (`env.py` docstring, `data/README.md`); M2 → DDQN algorithm + architecture; M3 → comparison table, convergence/stability plots; M4 → literature review, IG figures, references.
 
 ## Dependencies & timeline (Oct 28 → Nov 9)
 | Day | M1 Yousef | M2 Gomana | M3 Zyad | M4 Mohanad |
@@ -98,7 +99,7 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
 | Oct 28–30 | dataset + env v1 | DDQN on a dummy env | rule-based + tabular | literature review, IG on a dummy net |
 | Oct 31–Nov 2 | env final + MDP doc | train DDQN on the real env | DQN + eval script | IG pipeline ready |
 | Nov 3–5 | dataset README | 5-seed runs, save models | convergence/stability + table | IG on the trained models |
-| Nov 6–8 | slides | main.py end to end, slides | plots, slides | merge deck |
+| Nov 6–8 | buffer / help others | main.py end to end | plots | XAI figures |
 | Nov 9 | **all: full run from a clean env, rehearse, submit before 11 PM** | | | |
 
 Critical path: env (M1) → DDQN training (M2) → evaluation (M3) + IG (M4). Until the real env lands, M2, M3 and M4 work against a dummy env that follows the shared contract.
