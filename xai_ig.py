@@ -46,7 +46,7 @@ def explain(model, state, baseline=None, n_steps=128, atol=1e-4, rtol=1e-3):
             action = int(q.argmax(1).item())
             difference = float((q[0, action] - model(b)[0, action]).item())
         ig = IntegratedGradients(model)
-        for steps in (n_steps, n_steps * 2, n_steps * 4):
+        for steps in (n_steps * 2 ** k for k in range(6)):  # up to 32x: ReLU kinks need more steps on trained nets
             attrs, delta = ig.attribute(x, baselines=b, target=action, n_steps=steps,
                                        return_convergence_delta=True)
             residual = float(attrs.sum().item() - difference)

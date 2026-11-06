@@ -3,6 +3,5 @@ project details /
 *.html
 .DS_Store
 __pycache__/
-models/
 results/
 .venv/
