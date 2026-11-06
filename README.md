@@ -14,6 +14,10 @@ Group 2 class project (Selected Topics: RL & XAI). A Double DQN picks the ultraf
 
 Full module breakdown, shared contracts (state / action / env API) and timeline: [TEAM_PLAN.md](TEAM_PLAN.md).
 
+## Run everything
+
+`pip install -r requirements.txt`, then `python main.py` (about 2 min on CPU): trains DDQN and DQN on seeds 0-4, writes the convergence plot and per-seed held-out rewards to `results/`, then runs Integrated Gradients into `results/xai/`. `python main.py --quick` is a 5-second smoke test that writes only to `results/quick/`.
+
 ## Trained models
 
 `python train.py` (M2, about 1 min on CPU, fully deterministic) regenerates everything in `models/`:
