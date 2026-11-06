@@ -38,13 +38,13 @@ We compare conclusions across references before interpreting feature rankings.
 Speaker note: The matched reference forces age and albumin contributions to zero. It cannot establish that the model ignores them. Synthetic serum albumin in this environment is an assumption.
 
 ## 5. One decision, one session, many sessions
-Insert decision.png, session.png and cross_session.png from a validated trained run.
+Insert decision.png, session.png and cross_session.png from results/xai/ (trained seed-0 DDQN, M3 approved).
 The heatmap tracks changing signed contributions as actions change.
 Across sessions, we report mean absolute IG with session standard deviations.
 
-Current status: only software demonstration is available. Trained-policy findings remain pending M2 and M3.
+Add the cohort-reference figures from results/xai_cohort/ to contrast age and albumin.
 
-Speaker note: Demo images carry an untrained-network label. Keep that label if demonstrating the implementation before trained results exist.
+Speaker note: IG sessions draw from all 400 profiles, so these are not held-out patients.
 
 ## 6. Verification precedes interpretation
 M3 reviews convergence and stability across five training seeds.
@@ -62,19 +62,24 @@ Compare multiple explanation references and alternative-action contrasts.
 Resolve hidden simulator state with M1 and M2.
 
 ## 8. References
-Use the five IEEE references in literature_review.md, split over two slides if needed.
+Use references [1]–[7] in literature_review.md (IEEE style), split over two slides if needed.
 
-## Final deck order
+[6] M. Kanbay et al., “An update review of intradialytic hypotension,” *Clin. Kidney J.*, 2020. doi: 10.1093/ckj/sfaa078.
+[7] L. Rubini, P. Soundarapandian, and P. Eswaran, “Chronic Kidney Disease,” UCI Machine Learning Repository, 2015. doi: 10.24432/C5G020.
 
-1. Title and team (M4)
+## Content handed to Yousef for the deck
+
+Yousef builds the whole deck. Module owners hand over content only:
+
+1. Title and team (M4 content above)
 2. Project idea (M2)
 3. Problem statement (M1)
 4. Dataset and MDP (M1)
 5. Related work (M4)
 6. Proposed approach and solution (M2)
 7. Results and discussion, including convergence and stability (M3)
-8. Explanation method and actual figures (M4)
+8. Explanation method and figures from results/xai/ and results/xai_cohort/ (M4)
 9. Future work (M4)
 10. References (M4)
 
-Before final assembly, request editable slides from each owner. Replace pending content with actual results. Keep units and state/action definitions consistent with the repository, and verify all IDs, plots and references.
+Keep units and state/action definitions consistent with the repository, and verify all IDs, plots and references.

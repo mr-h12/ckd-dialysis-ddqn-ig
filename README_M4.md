@@ -1,13 +1,13 @@
 # M4: Integrated Gradients and presentation handoff
 
-Owner per repository: Mohanad Mostfa Ali. Based on main commit 9058b42a07227ff8ca365cacc5ab79a54ec7bc59.
+Owner per repository: Mohanad Mostfa Ali.
 
 ## Install and run
 
-Copy `xai_ig.py` into the repository root next to `env.py`. Install `requirements-m4.txt` in your Python environment.
+Run these commands from the repository root. `python main.py` already trains the models, runs M3's sign-off and writes the trained seed-0 DDQN audit to `results/xai/`, then the cohort-reference audit (age/albumin contrast) to `results/xai_cohort/`. The commands below run `xai_ig.py` on its own.
 
 ```sh
-python -m pip install -r requirements-m4.txt
+python -m pip install -r requirements.txt
 python xai_ig.py --demo --sessions 10 --output results/xai_demo
 ```
 
@@ -62,7 +62,7 @@ python xai_ig.py --model models/ddqn_scripted_seed0.pt --evidence results/xai_ap
 
 Numerical completeness requires `abs(sum(IG) - (Q(x,a)-Q(b,a))) <= 1e-4 + 1e-3*abs(Q difference)`. Integration retries up to 32 times the requested resolution and fails instead of silently accepting a poor result.
 
-Session seeds 10000 onward avoid the five training RNG seeds, but this does **not** guarantee distinct held-out patient rows. M1/M3 must supply patient-level splits before claiming generalization to unseen patients.
+Session seeds 10000 onward avoid the five training RNG seeds, but IG sessions in `main.py` draw from all 400 UCI profiles, including the 320 training profiles. The patient-level split in `train.py` (80 held-out profiles) applies to evaluation, not to IG, so do not describe IG results as unseen patients.
 
 ## Known project limitations to discuss
 
@@ -70,6 +70,4 @@ The existing environment synthesizes weight, systolic pressure and serum albumin
 
 ## Team handoff
 
-M1: freeze normalization/action order and document data assumptions. M2: provide the trained online network export. M3: provide validation report, model-bound approval and held-out patient split. M4: run both baseline audits, inspect clinically relevant patterns, insert actual figures into the presentation, and merge teammates' completed slides.
-
-The final trained results and merged team deck depend on artifacts absent from this repository snapshot. `slides_m4.md` supplies ready-to-present M4 wording and the merge order without inventing results.
+Trained models, M3's validation report and both IG audits are produced by `python main.py`. M4 inspects both audits for clinically relevant patterns and hands slide content and figures to Yousef, who builds the deck (see `TEAM_PLAN.md`). `slides_m4.md` holds that M4 content.
