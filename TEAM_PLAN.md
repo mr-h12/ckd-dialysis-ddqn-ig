@@ -22,7 +22,7 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
       ▼
 [5] XAI: Integrated Gradients on DDQN Q-network → per-step, per-session, cross-session attributions
       ▼
-[6] Deliverables: dataset folder + README, runnable code, presentation (8 sections + refs)
+[6] Deliverables: dataset folder + README, runnable code, presentation (9 required items: title + members/IDs, idea, problem statement, literature review, proposed approach, proposed solution, results & discussion, future work, references)
 ```
 
 ## Shared contracts (agree on Day 1 so everyone can work in parallel)
@@ -56,7 +56,7 @@ During hemodialysis, an agent picks the ultrafiltration (UF) rate every 15 min. 
 1. Q-network (PyTorch MLP 8→64→64→5), replay buffer, ε-greedy schedule.
 2. Double DQN update: the online net selects the argmax, the target net evaluates it, and the target net is soft- or hard-updated.
 3. Training loop with logging: episode reward, loss, ε and hypotension events per episode.
-4. Hyperparameter config at the top of the file (γ, lr, batch, buffer size, target update), plus a short tuning sweep.
+4. Hyperparameter config at the top of the file (γ, lr, batch, buffer size, target update); defaults were kept, no tuning sweep was run.
 5. Train over 5 seeds, then save models and logs for Modules 3 and 4.
 6. Write `main.py` to run the full pipeline end to end, and `requirements.txt`.
 
@@ -106,4 +106,4 @@ Critical path: env (M1) → DDQN training (M2) → evaluation (M3) + IG (M4). Un
 
 ## Verification (before submitting)
 - `python main.py` runs from a fresh venv and regenerates every results CSV, plot and IG figure.
-- Each ZERO-grade item is ticked against CLAUDE.md: MDP defined, 3 baselines compared, convergence/stability shown before IG, dataset justified, presentation has all 8 sections + references.
+- Each ZERO-grade item is ticked against CLAUDE.md: MDP defined, 3 baselines compared, convergence/stability shown before IG, dataset justified, presentation has all 9 required items: title + members/IDs, idea, problem statement, literature review, proposed approach, proposed solution, results & discussion, future work, references.

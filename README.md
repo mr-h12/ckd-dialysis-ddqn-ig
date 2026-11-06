@@ -16,7 +16,9 @@ Full module breakdown, shared contracts (state / action / env API) and timeline:
 
 ## Run everything
 
-`pip install -r requirements.txt`, then `python main.py` (about 2 min on CPU): trains DDQN and DQN on seeds 0-4, writes the convergence plot and per-seed held-out rewards to `results/`, then runs Integrated Gradients into `results/xai/`. `python main.py --quick` is a 5-second smoke test that writes only to `results/quick/`.
+`pip install -r requirements.txt`, then `python main.py` (about 2 min on CPU), the one command that regenerates models, results and IG: trains DDQN and DQN on seeds 0-4, writes the convergence plot and per-seed held-out rewards to `results/`, then runs Integrated Gradients into `results/xai/` and the cohort-reference IG audit into `results/xai_cohort/`. `python main.py --quick` is a 5-second smoke test that writes only to `results/quick/`.
+
+Tested on Python 3.11 (CI) and 3.14; use 3.11 for submission runs. torch.jit.trace warns on 3.14+. Tested versions: `torch==2.15.0 numpy==2.5.4 captum==0.9.0 matplotlib==3.11.2`.
 
 ## M3 results
 
@@ -31,7 +33,7 @@ Full module breakdown, shared contracts (state / action / env API) and timeline:
 
 ## Trained models
 
-`python train.py` (M2, about 1 min on CPU, fully deterministic) regenerates everything in `models/`:
+`python main.py` regenerates everything in `models/` (`python train.py` alone also works: M2, about 1 min on CPU, fully deterministic). Training defaults in `train.py` (γ, lr, batch, buffer, target update) follow standard DQN/Double-DQN practice; no tuning sweep was run. On Python 3.14 the regenerated `models/ddqn_scripted*.pt` differ byte-wise (same weights), so don't commit them after a local run:
 
 | File | What |
 |---|---|
