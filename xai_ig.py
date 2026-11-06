@@ -12,9 +12,28 @@ import numpy as np
 import torch
 from captum.attr import IntegratedGradients
 
+from env import ACTIONS, SCALE, DialysisEnv
+
 FEATURES = ['overload', 'removed', 'sbp', 'dbp', 'hr', 'time', 'age', 'albumin']
-SCALE = np.array([4, 4, 200, 120, 150, 1, 100, 5], dtype=np.float32)
-ACTIONS = [0, 5, 8, 10, 13]
+
+
+def check_evidence(model_path, evidence_path, training_seeds=(0, 1, 2, 3, 4)):
+    """Refuse IG unless M3's approval JSON is bound to this exact checkpoint (SHA-256).
+
+    Returns the model digest; raises ValueError if the evidence does not approve it.
+    """
+    model_path, evidence_path = Path(model_path), Path(evidence_path)
+    digest = hashlib.sha256(model_path.read_bytes()).hexdigest()
+    evidence = json.loads(evidence_path.read_text())
+    if (evidence.get('model_sha256') != digest or evidence.get('convergence_passed') is not True
+            or evidence.get('stability_passed') is not True
+            or sorted(evidence.get('training_seeds', [])) != sorted(training_seeds)
+            or not evidence.get('report')):
+        raise ValueError(f'Evidence must match checkpoint and approve convergence/stability over seeds '
+                         f'{list(training_seeds)} with report path')
+    if not (evidence_path.parent / evidence['report']).is_file():
+        raise ValueError('M3 report file does not exist')
+    return digest
 
 
 def baseline_for(state):
@@ -141,20 +160,13 @@ def main():
         model = torch.nn.Sequential(torch.nn.Linear(8, 64), torch.nn.ReLU(),
                                     torch.nn.Linear(64, 64), torch.nn.ReLU(), torch.nn.Linear(64, 5))
     else:
-        digest = hashlib.sha256(args.model.read_bytes()).hexdigest()
         if not args.evidence:
             parser.error('Trained explanations require --evidence from M3')
-        evidence = json.loads(args.evidence.read_text())
-        if (evidence.get('model_sha256') != digest or evidence.get('convergence_passed') is not True
-                or evidence.get('stability_passed') is not True
-                or sorted(evidence.get('training_seeds', [])) != [0, 1, 2, 3, 4]
-                or not evidence.get('report')):
-            parser.error('Evidence must match checkpoint and approve convergence/stability over seeds 0..4 with report path')
-        report = args.evidence.parent / evidence['report']
-        if not report.is_file():
-            parser.error('M3 report file does not exist')
+        try:
+            digest = check_evidence(args.model, args.evidence)
+        except ValueError as e:
+            parser.error(str(e))
         model = torch.jit.load(str(args.model), map_location='cpu')
-    from env import DialysisEnv
     reference = json.loads(args.reference.read_text()) if args.reference else None
     seeds = list(range(args.seed, args.seed + args.sessions))
     rows = audit(model, DialysisEnv(), seeds, args.output, args.demo, reference)
