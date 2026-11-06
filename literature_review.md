@@ -1,6 +1,6 @@
-# Literature review (seven references, IEEE style)
+# Literature review (ten references, IEEE style)
 
-Verified against publisher pages and original-paper records on 28 October 2026. Foundational algorithm references retain their original years. Two application papers are from 2025.
+Verified against publisher pages and original-paper records on 28 October 2026. Foundational algorithm references retain their original years. Two application papers are from 2025 [4, 5] and two reviews are from 2026 [9, 10]; [9] and [10] were checked against Crossref on 6 November 2026.
 
 ## Comparison and project relevance
 
@@ -12,6 +12,8 @@ Verified against publisher pages and original-paper records on 28 October 2026. 
 | Li et al. [4] | Explainable ML for warning of blood-pressure anomalies in maintenance hemodialysis | Motivation for interpretable patient-signal analysis | Prediction and SHAP differ from control and IG |
 | Wang et al. [5] | Develops ML models for intradialytic hypotension prediction | Context for BP-risk modeling and evaluation | Predictive performance does not validate a treatment policy |
 | Kanbay et al. [6] | Reviews intradialytic hypotension, plasma refill, and associated risk factors | Motivates the simulator pressure response and choice of rate and pressure thresholds | The simulator uses simplified dynamics and project-specific thresholds |
+| Cheungpasitporn et al. [9] | Roadmap for clinical AI in nephrology, including AI-assisted UF management in dialysis, IDH prediction, and RL as adaptive decision support | Places our UF controller within current nephrology AI and its interpretability and validation barriers | A narrative review; it does not evaluate a specific UF policy |
+| Tang et al. [10] | Scoping review of 72 RL studies for sepsis treatment (mostly fluids and vasopressors on MIMIC) | Supports our explicit S/A/R design, baselines, and caution about off-policy claims; motivates interpretability | Sepsis ICU care, not dialysis; all reviewed studies are retrospective |
 
 Our contribution is a classroom combination of a simplified dialysis environment, DDQN comparisons, and an IG audit across simulated sessions. None of these papers validates our hand-tuned simulator or the synthetic albumin mapping.
 
@@ -30,5 +32,11 @@ Our contribution is a classroom combination of a simplified dialysis environment
 [6] M. Kanbay, L. A. Ertuglu, B. Afsar, E. Ozdogan, D. Siriopol, A. Covic, C. Basile, and A. Ortiz, “An update review of intradialytic hypotension: concept, risk factors, clinical implications and management,” *Clin. Kidney J.*, vol. 13, no. 6, pp. 981–993, 2020, doi: 10.1093/ckj/sfaa078. https://doi.org/10.1093/ckj/sfaa078
 
 [7] L. Rubini, P. Soundarapandian, and P. Eswaran, “Chronic Kidney Disease,” UCI Machine Learning Repository, 2015, doi: 10.24432/C5G020. https://doi.org/10.24432/C5G020
+
+[8] H. Polat, H. Danaei Mehr, and A. Cetin, “Diagnosis of chronic kidney disease based on support vector machine by feature selection methods,” *J. Med. Syst.*, vol. 41, no. 4, art. 55, 2017, doi: 10.1007/s10916-017-0703-x. https://doi.org/10.1007/s10916-017-0703-x
+
+[9] W. Cheungpasitporn, A. Athavale, L. Ghazi, K. B. Kashani, T. Colicchio, J. L. Koyner, J. Chen, J. H. Ix, G. Nadkarni, and J. A. Neyra, “Transforming nephrology through artificial intelligence: a state-of-the-art roadmap for clinical integration,” *Clin. Kidney J.*, vol. 19, no. 2, art. sfag004, 2026, doi: 10.1093/ckj/sfag004. https://doi.org/10.1093/ckj/sfag004
+
+[10] Z. Tang, P. Sun, R. Liang, S. Tong, Y. Yang, M. Yang, and H. Chen, “Reinforcement learning for treatment decision-making in sepsis: a scoping review,” *npj Digit. Med.*, 2026, doi: 10.1038/s41746-026-03034-1. https://doi.org/10.1038/s41746-026-03034-1 (Published online 18 July 2026; Crossref lists no volume or article number yet.)
 
 Implementation reference: Captum IntegratedGradients API, https://captum.ai/api/integrated_gradients.html. The API returns an approximation delta based on completeness. A small delta verifies numerical integration, not clinical reliability.

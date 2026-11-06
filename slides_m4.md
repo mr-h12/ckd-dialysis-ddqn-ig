@@ -62,7 +62,7 @@ Compare multiple explanation references and alternative-action contrasts.
 Resolve hidden simulator state with M1 and M2.
 
 ## 8. References
-Use references [1]–[7] in literature_review.md (IEEE style), split over two slides if needed.
+Use references [1]–[10] in literature_review.md (IEEE style), split over three slides.
 
 [6] M. Kanbay et al., “An update review of intradialytic hypotension,” *Clin. Kidney J.*, 2020. doi: 10.1093/ckj/sfaa078.
 [7] L. Rubini, P. Soundarapandian, and P. Eswaran, “Chronic Kidney Disease,” UCI Machine Learning Repository, 2015. doi: 10.24432/C5G020.
