@@ -18,6 +18,17 @@ Full module breakdown, shared contracts (state / action / env API) and timeline:
 
 `pip install -r requirements.txt`, then `python main.py` (about 2 min on CPU): trains DDQN and DQN on seeds 0-4, writes the convergence plot and per-seed held-out rewards to `results/`, then runs Integrated Gradients into `results/xai/`. `python main.py --quick` is a 5-second smoke test that writes only to `results/quick/`.
 
+## M3 results
+
+`main.py` calls `evaluate.py` (M3), which compares DDQN with standard DQN, tabular Q-learning and a rule-based controller on 100 sessions of the 80 held-out patients. It writes `results/metrics_table.csv`, the reward and loss curves, and `results/validation_report.md` plus `results/xai_approval.json`, the sign-off that convergence and stability passed before IG.
+
+| Agent (mean ± std over 5 seeds) | Mean reward | Final overload (kg) | Hypotension sessions | UF change per step (mL/kg/h) |
+|---|---|---|---|---|
+| DDQN | 1.02 ± 0.25 | 0.55 | 1.0% | 1.62 |
+| DQN | 1.03 ± 0.11 | 0.50 | 1.8% | 2.37 |
+| Tabular Q-learning | -0.71 ± 0.60 | 0.54 | 2.8% | 3.92 |
+| Rule-based (per-patient constant, max 13) | -41.57 | 0.11 | 50% | 0 |
+
 ## Trained models
 
 `python train.py` (M2, about 1 min on CPU, fully deterministic) regenerates everything in `models/`:
