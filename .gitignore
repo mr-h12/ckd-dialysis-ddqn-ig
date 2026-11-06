@@ -6,3 +6,5 @@ __pycache__/
 results/
 .venv/
 dist/
+!slides/CKD_DDQN_IG.html
+!slides/CKD_DDQN_IG.pdf
