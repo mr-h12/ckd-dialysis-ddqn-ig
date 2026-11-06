@@ -1,10 +1,11 @@
 # Dataset: UCI Chronic Kidney Disease
 
 - **Source:** UCI Machine Learning Repository, dataset id 336, https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease. License CC BY 4.0.
-- **Origin / reliability:** collected over ~2 months at Apollo Hospitals, Karaikudi, India (donated 2015 by L. Jerlin Rubini, Dr. P. Soundarapandian, Dr. P. Eswaran). One of the most-used public CKD datasets and the standard benchmark for CKD classification papers.
+- **Origin / reliability:** collected over ~2 months at Apollo Hospitals, Karaikudi, India (donated 2015 by L. Jerlin Rubini, Dr. P. Soundarapandian, Dr. P. Eswaran). One of the most-used public CKD datasets and the standard benchmark for CKD classification papers [1, 2].
+- **Why this dataset:** real CKD patient profiles, open and licensed (CC BY 4.0), small enough for a class project; no public intradialytic time series exists, so we use it only for patient profiles.
 - **Size:** 400 patients × 24 features + 1 target. 11 numeric, 13 nominal; has missing values.
 - **Target:** `class` = `ckd` / `notckd` (250 / 150).
-- **File:** `ckd.csv` (regenerate with `python data/fetch_data.py`).
+- **File:** `ckd.csv` (already committed; re-fetching is optional: `pip install ucimlrepo` (not in `requirements.txt`), then `python data/fetch_data.py`).
 
 ## How we use it
 We do **not** train on the target. The dataset only supplies realistic patient profiles for the dialysis simulator (`env.py`):
@@ -20,3 +21,7 @@ We do **not** train on the target. The dataset only supplies realistic patient p
 Missing values are filled with the column median.
 
 **Limitation / future work:** UCI CKD has no intradialytic time series. The Lin et al. 2019 hemodialysis dataset (Scientific Data; 1,075 patients, 165,986 sessions) would allow learning the dynamics from real sessions instead of a hand-built simulator.
+
+## References
+1. L. Rubini, P. Soundarapandian, P. Eswaran, "Chronic Kidney Disease," UCI Machine Learning Repository, 2015, doi: 10.24432/C5G020.
+2. H. Polat, H. Danaei Mehr, A. Cetin, "Diagnosis of Chronic Kidney Disease Based on Support Vector Machine by Feature Selection Methods," *Journal of Medical Systems*, vol. 41, no. 4, art. 55, 2017, doi: 10.1007/s10916-017-0703-x.
